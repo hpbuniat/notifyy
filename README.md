@@ -15,4 +15,4 @@ Builtin Notifiers
 
 Extending
 -----
-You may add own adapters by simply imlementing the Notifyable-Interface.
+You may add own adapters by simply implementing the Notifyable-Interface.
