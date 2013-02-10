@@ -1,0 +1,31 @@
+{
+    "name": "notifyy",
+    "description": "notifyy",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "notifyy",
+        "notification",
+        "libnotify",
+        "growl",
+        "snarl"
+    ],
+    "authors": [
+        {
+            "name": "Hans-Peter Buniat",
+            "email": "hpbuniat@googlemail.com",
+            "role": "lead"
+        }
+    ],
+    "homepage": "https://github.com/hpbuniat/notifyy",
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/hpbuniat/notifyy"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "notifyy": "src/"
+        }
+    }
+}
