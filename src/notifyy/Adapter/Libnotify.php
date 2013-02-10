@@ -60,9 +60,9 @@ class Libnotify extends \notifyy\AbstractAdapter implements \notifyy\Notifyable 
      * @see http://standards.freedesktop.org/icon-naming-spec/icon-naming-spec-latest.html
      */
     protected $_aIcons = array(
-        \notifyy\AbstractAdapter::SUCCESS => 'face-smile',
-        \notifyy\AbstractAdapter::FAILED => 'face-sad',
-        \notifyy\AbstractAdapter::INFO => 'face-angel'
+        \notifyy\Notifyable::SUCCESS => 'face-smile',
+        \notifyy\Notifyable::FAILED => 'face-sad',
+        \notifyy\Notifyable::INFO => 'face-angel'
     );
 
     /**

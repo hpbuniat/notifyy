@@ -53,27 +53,6 @@ namespace notifyy;
 abstract class AbstractAdapter {
 
     /**
-     * Message for successful-tests
-     *
-     * @var string
-     */
-    const SUCCESS = 'Success';
-
-    /**
-     * Message for failed-tests
-     *
-     * @var string
-     */
-    const FAILED = 'Failed';
-
-    /**
-     * Message for Infos
-     *
-     * @var string
-     */
-    const INFO = 'Info';
-
-    /**
      * Maximum message length
      *
      * @var int

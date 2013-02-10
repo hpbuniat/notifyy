@@ -39,7 +39,7 @@ class FileTest extends \PHPUnit_Framework_TestCase {
     public function testNotify() {
         $sText = md5(time());
         $this->assertInstanceOf('\notifyy\AbstractAdapter', $this->_object->notify(
-            \notifyy\AbstractAdapter::SUCCESS,
+            \notifyy\Notifyable::SUCCESS,
             $sText
         ));
 

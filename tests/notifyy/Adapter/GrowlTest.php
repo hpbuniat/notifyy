@@ -27,7 +27,7 @@ class GrowlTest extends \PHPUnit_Framework_TestCase {
     public function testNotify() {
         $sText = md5(time());
         $this->assertInstanceOf('\notifyy\AbstractAdapter', $this->_object->notify(
-            \notifyy\AbstractAdapter::SUCCESS,
+            \notifyy\Notifyable::SUCCESS,
             $sText
         ));
     }
@@ -36,7 +36,7 @@ class GrowlTest extends \PHPUnit_Framework_TestCase {
      * Test text formatting
      */
     public function testformatMessage() {
-        $this->assertEquals(\notifyy\AbstractAdapter::SUCCESS, $this->_object->formatMessage(\notifyy\AbstractAdapter::SUCCESS));
+        $this->assertEquals(\notifyy\Notifyable::SUCCESS, $this->_object->formatMessage(\notifyy\Notifyable::SUCCESS));
 
         $sTest = implode(array_fill(0, 1024, 'A'));
         $this->assertEquals(256, strlen($this->_object->formatMessage($sTest)));
