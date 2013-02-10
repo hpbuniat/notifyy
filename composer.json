@@ -1,5 +1,5 @@
 {
-    "name": "notifyy",
+    "name": "hpbuniat/notifyy",
     "description": "notifyy",
     "license": "BSD-3-Clause",
     "keywords": [
@@ -17,12 +17,6 @@
         }
     ],
     "homepage": "https://github.com/hpbuniat/notifyy",
-    "repositories": [
-        {
-            "type": "git",
-            "url": "https://github.com/hpbuniat/notifyy"
-        }
-    ],
     "autoload": {
         "psr-0": {
             "notifyy": "src/"
