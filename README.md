@@ -7,11 +7,11 @@ This is especially useful in cli applications where it's not longer necessary to
 Builtin Notifiers
 -----
 
-- Stdout, which simply prints the output
+- Stdout (simply prints the output)
 - File
 - Dbus
-- Growl, which works well with snarl on windows
-- Libnotify, which used notify-send
+- Growl (works well with snarl on windows)
+- Libnotify (uses notify-send)
 
 Extending
 -----
