@@ -72,14 +72,29 @@ abstract class Builder {
     public static function build($mAdapter, $mConfig = null) {
 
         $sClass = $mAdapter;
-        if (is_string($mAdapter) === true and class_exists($mAdapter) !== true) {
-            $sClass = sprintf('\\notifyy\\Adapter\\%s', ucfirst(strtolower($mAdapter)));
+        if (is_string($mAdapter) === true) {
+            $bPrefix = false;
+            if (class_exists($mAdapter) !== true) {
+                $bPrefix = true;
+            }
+            else {
+                $oReflection = new \ReflectionClass($sClass);
+                if ($oReflection->implementsInterface('\\notifyy\\Notifyable') !== true) {
+                    $bPrefix = true;
+                }
+
+                unset($oReflection);
+            }
+
+            if ($bPrefix === true) {
+                $sClass = sprintf('\\notifyy\\Adapter\\%s', ucfirst(strtolower($mAdapter)));
+            }
         }
 
         $oNotifier = null;
         if (is_string($mAdapter) === true and class_exists($sClass) === true) {
             $oReflection = new \ReflectionClass($sClass);
-            if ($oReflection->implementsInterface('\notifyy\Notifyable') === true) {
+            if ($oReflection->implementsInterface('\\notifyy\\Notifyable') === true) {
                 $oNotifier = new $sClass();
 
                 /* @var $oNotifier AbstractAdapter */
