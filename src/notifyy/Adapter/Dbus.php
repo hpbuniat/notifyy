@@ -58,7 +58,7 @@ class Dbus extends \notifyy\AbstractAdapter implements \notifyy\Notifyable {
     /**
      * The DBus-Proxy
      *
-     * @var DBusObject
+     * @var \DBusObject
      */
     private $_oProxy = null;
 
@@ -67,7 +67,7 @@ class Dbus extends \notifyy\AbstractAdapter implements \notifyy\Notifyable {
      */
     public function __construct() {
         if (extension_loaded('dbus') === true) {
-            $oDbus = new Dbus(Dbus::BUS_SESSION, true);
+            $oDbus = new \Dbus(\Dbus::BUS_SESSION, true);
             $this->_oProxy = $oDbus->createProxy('org.freedesktop.Notifications', '/org/freedesktop/Notifications', 'org.freedesktop.Notifications');
         }
     }
@@ -77,15 +77,15 @@ class Dbus extends \notifyy\AbstractAdapter implements \notifyy\Notifyable {
      * @see \notifyy\AbstractAdapter::notify()
      */
     public function notify($sStatus, $sText, $sContext = \notifyy\Builder::NAME) {
-        if (extension_loaded('dbus') === true and $this->_oProxy instanceof DBusObject) {
+        if (extension_loaded('dbus') === true and $this->_oProxy instanceof \DBusObject) {
             $this->_oProxy->Notify(
-                notifyy_TextUI_Command::NAME,
-                new DBusUInt32(0),
+                $sContext,
+                new \DBusUInt32(0),
                 '',
                 $sContext . ': ' . $sStatus,
                 $sText,
-                new DBusArray(DBus::STRING, array()),
-                new DBusDict(DBus::VARIANT, array()),
+                new \DBusArray(\DBus::STRING, array()),
+                new \DBusDict(\DBus::VARIANT, array()),
                 -1
             );
         }

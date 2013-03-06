@@ -111,7 +111,7 @@ class Growl extends \notifyy\AbstractAdapter implements \notifyy\Notifyable {
      * @return \notifyy\AbstractAdapter
      */
     private function _send() {
-        if ($this->_oConfig instanceof stdClass) {
+        if ($this->_oConfig instanceof \stdClass) {
             $this->_sMessage .= pack('H32', md5($this->_sMessage . $this->_oConfig->password));
 
             $rSocket = fsockopen('udp://' . $this->_oConfig->host, $this->_oConfig->port);
