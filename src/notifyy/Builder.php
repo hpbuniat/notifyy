@@ -71,6 +71,32 @@ abstract class Builder {
      */
     public static function build($mAdapter, $mConfig = null) {
 
+        $oContainer = new Collection();
+        if (is_array($mAdapter) === true) {
+            foreach ($mAdapter as $mConcrete) {
+                $oAdapter = call_user_func_array('self::buildAdapter', $mConcrete);
+                $oContainer->add($oAdapter);
+            }
+        }
+        else {
+            $oContainer = self::buildAdapter($mAdapter, $mConfig);
+        }
+
+        return $oContainer;
+    }
+
+    /**
+     * Init a Adapter
+     *
+     * @param  mixed $mAdapter
+     * @param  mixed $mConfig
+     *
+     * @return Notifyable
+     *
+     * @throws Exception
+     */
+    public static function buildAdapter($mAdapter, $mConfig = null) {
+
         $sClass = $mAdapter;
         if (is_string($mAdapter) === true) {
             $bPrefix = false;

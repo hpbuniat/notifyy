@@ -6,28 +6,28 @@ namespace notifyy;
  */
 class BuilderTest extends \PHPUnit_Framework_TestCase {
 
-    /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     */
-    protected function setUp() {
-    }
 
     /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown() {
-    }
-
-    /**
-     * Test building the adapter
+     * Test building an adapter
      *
      * @dataProvider buildProvider
      */
-    public function testBuild($mAdapter, $mConfig = null) {
+    public function testBuildAdapter($mAdapter, $mConfig = null) {
         $oNotifier = Builder::build($mAdapter, $mConfig);
         $this->assertInstanceOf('\notifyy\Notifyable', $oNotifier);
+
+        $oNotifier->notify(Notifyable::SUCCESS, md5(time()));
+    }
+
+    /**
+     * Test building multiple adapters
+     */
+    public function testBuild() {
+        $oNotifier = Builder::build($this->buildProvider());
+        $this->assertInstanceOf('\notifyy\Notifyable', $oNotifier);
+        $this->assertEquals(4, $oNotifier->count());
+
+        $oNotifier->notify(Notifyable::SUCCESS, md5(time()));
     }
 
     /**

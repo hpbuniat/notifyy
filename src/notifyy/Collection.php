@@ -39,10 +39,10 @@
  * @copyright 2011-2013 Hans-Peter Buniat <hpbuniat@googlemail.com>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-namespace notifyy\Adapter;
+namespace notifyy;
 
 /**
- * Notify via Growl
+ * Adapter-Collection as wrapper for multiple adapters
  *
  * @author Hans-Peter Buniat <hpbuniat@googlemail.com>
  * @copyright 2011-2013 Hans-Peter Buniat <hpbuniat@googlemail.com>
@@ -50,76 +50,55 @@ namespace notifyy\Adapter;
  * @version Release: @package_version@
  * @link https://github.com/hpbuniat/notifyy
  */
-
-// @codeCoverageIgnoreStart
-class Growl extends \notifyy\AbstractAdapter implements \notifyy\Notifyable {
+class Collection implements Notifyable {
 
     /**
-     * The message to send
+     * Stack of adapter-instances
      *
-     * @var string
+     * @var array
      */
-    protected $_sMessage = '';
+    protected $_aAdapter = array();
 
     /**
-     * Indicate registration status
+     * Add an adapter to the stack
      *
-     * @var boolean
-     */
-    protected $_bRegistered = false;
-
-    /**
-     * Maximum message length
+     * @param  Notifyable $oAdapter
      *
-     * @var int
+     * @return $this
      */
-    protected $_iMessageLength = 256;
-
-    /**
-     * (non-PHPdoc)
-     * @see \notifyy\AbstractAdapter::notify()
-     */
-    public function notify($sStatus, $sText, $sContext = \notifyy\Builder::NAME) {
-        $sName = \notifyy\Builder::NAME;
-        if ($this->_bRegistered !== true) {
-            $this->_sMessage = pack('c2nc2', 1, 0, strlen($sName), 3, 3)
-                             . $sName
-                             . pack('n', strlen(self::SUCCESS)) . self::SUCCESS
-                             . pack('n', strlen(self::INFO)) . self::INFO
-                             . pack('n', strlen(self::FAILED)) . self::FAILED
-                             . pack('c', 0)
-                             . pack('c', 1)
-                             . pack('c', 2);
-
-            $this->_send();
-            $this->_bRegistered = true;
-        }
-
-        $sText = $sStatus . PHP_EOL . PHP_EOL . trim($sText);
-        $sText = $this->formatMessage($sText);
-
-        $this->_sMessage = pack('c2n5', 1, 1, 0, strlen($sStatus), strlen($sContext), strlen($sText), strlen($sName))
-                         . $sStatus . $sContext . $sText . $sName;
-        $this->_send();
-
+    public function add(Notifyable $oAdapter) {
+        $this->_aAdapter[get_class($oAdapter)] = $oAdapter;
         return $this;
     }
 
     /**
-     * Send a message via growl-protocol
+     * Get the number of registered adapter
      *
-     * @return \notifyy\AbstractAdapter
+     * @return int
      */
-    private function _send() {
-        if ($this->_oConfig instanceof \stdClass and empty($this->_oConfig->host) !== true and empty($this->_oConfig->port) !== true) {
-            $this->_sMessage .= pack('H32', md5($this->_sMessage . $this->_oConfig->password));
+    public function count() {
+        return count($this->_aAdapter);
+    }
 
-            $rSocket = fsockopen('udp://' . $this->_oConfig->host, $this->_oConfig->port);
-            fwrite($rSocket, $this->_sMessage);
-            fclose($rSocket);
+    /**
+     * (non-PHPdoc)
+     * @see \notifyy\NotifyAble::notify()
+     */
+    public function notify($sStatus, $sText, $sContext = \notifyy\Builder::NAME) {
+        foreach ($this->_aAdapter as $oAdapter) {
+
+            /* @var $oAdapter \notifyy\Notifyable */
+            $oAdapter->notify($sStatus, $sText, $sContext);
         }
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see \notifyy\NotifyAble::setConfig()
+     */
+    public function setConfig(\stdClass $oConfig = null) {
+        /* nop */
 
         return $this;
     }
 }
-// @codeCoverageIgnoreEnd
