@@ -64,6 +64,9 @@ class BuilderTest extends \PHPUnit_Framework_TestCase {
             ),
             array(
                 new \notifyy\Adapter\Growl()
+            ),
+            array(
+                null
             )
         );
     }

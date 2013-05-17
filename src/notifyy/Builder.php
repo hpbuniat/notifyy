@@ -74,11 +74,18 @@ abstract class Builder {
         $oContainer = new Collection();
         if (is_array($mAdapter) === true) {
             foreach ($mAdapter as $mConcrete) {
-                $oAdapter = call_user_func_array('self::buildAdapter', $mConcrete);
-                $oContainer->add($oAdapter);
+                $mAdapterPayload = $mConcrete;
+                if (is_array($mConcrete) === true) {
+                    $mAdapterPayload = reset($mAdapterPayload);
+                }
+
+                if (empty($mConcrete) !== true and empty($mAdapterPayload) !== true) {
+                    $oAdapter = call_user_func_array('self::buildAdapter', $mConcrete);
+                    $oContainer->add($oAdapter);
+                }
             }
         }
-        else {
+        elseif (empty($mAdapter) !== true) {
             $oContainer = self::buildAdapter($mAdapter, $mConfig);
         }
 
