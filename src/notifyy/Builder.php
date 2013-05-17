@@ -73,9 +73,16 @@ abstract class Builder {
 
         $oContainer = new Collection();
         if (is_array($mAdapter) === true) {
-            foreach ($mAdapter as $mConcrete) {
+            foreach ($mAdapter as $sAdapter => $mConcrete) {
                 $mAdapterPayload = $mConcrete;
-                if (is_array($mConcrete) === true) {
+                if (is_string($sAdapter) === true and is_numeric($sAdapter) !== true and is_array($mConcrete)) {
+                    $mAdapterPayload = $sAdapter;
+                    $mConcrete = array(
+                        $sAdapter,
+                        $mConcrete
+                    );
+                }
+                elseif (is_array($mConcrete) === true) {
                     $mAdapterPayload = reset($mAdapterPayload);
                 }
 

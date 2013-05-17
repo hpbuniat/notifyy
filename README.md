@@ -13,6 +13,25 @@ Builtin Notifiers
 - Growl (works well with snarl on windows)
 - Libnotify (uses notify-send)
 
+Configuration
+-----
+    "growl": {
+        "host": "127.0.0.1",
+        "port": "9887",
+        "password": "",
+        "enabled": false
+    },
+    "file": {
+        "enabled": false,
+        "path": "/tmp"
+    },
+    "stdout": {
+        "enabled": true
+    },
+    "libnotify": {
+        "enabled": true
+    }
+
 Extending
 -----
 You may add own adapters by simply implementing the Notifyable-Interface.

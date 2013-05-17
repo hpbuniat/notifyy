@@ -31,6 +31,24 @@ class BuilderTest extends \PHPUnit_Framework_TestCase {
     }
 
     /**
+     * Test building multiple adapters
+     */
+    public function testBuildKeyValue() {
+        $oNotifier = Builder::build(array(
+            'stdout' => array(
+                'enabled' => true
+            ),
+            'libnotify' => array(
+                'enabled' => true
+            )
+        ));
+        $this->assertInstanceOf('\notifyy\Notifyable', $oNotifier);
+        $this->assertEquals(2, $oNotifier->count());
+
+        $oNotifier->notify(Notifyable::SUCCESS, md5(time()));
+    }
+
+    /**
      * Return some working arguments
      *
      * @return array
