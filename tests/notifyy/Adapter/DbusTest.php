@@ -24,7 +24,7 @@ class DbusTest extends \PHPUnit_Framework_TestCase {
      * Test simple notify call
      */
     public function testNotify() {
-        $sText = md5(time());
+        $sText = sprintf('%s: %s', 'dbus', md5(time()));
         $this->assertInstanceOf('\notifyy\AbstractAdapter', $this->_object->notify(
             \notifyy\Notifyable::SUCCESS,
             $sText
