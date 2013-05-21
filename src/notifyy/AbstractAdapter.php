@@ -96,15 +96,4 @@ abstract class AbstractAdapter {
 
         return preg_replace('!\\033\[\d{1,2}(;\d{1,2})?m!i', '', $sText);
     }
-
-    /**
-     * Execute the notification
-     *
-     * @param  string $sStatus The message-status
-     * @param  string $sText The message-payload
-     * @param  string $sContext An optional application-context
-     *
-     * @return AbstractAdapter
-     */
-    abstract public function notify($sStatus, $sText, $sContext = \notifyy\Builder::NAME);
 }
